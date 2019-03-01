@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe AuthorsController do
+RSpec.describe AuthorsController, type: :feature do
   let(:attributes) do
     {
       name: "H. Jeff",
@@ -14,7 +14,8 @@ RSpec.describe AuthorsController do
 
   describe "showing an author" do
     it "shows an author" do
-      get :show, id: @author.id
+      # get :show, id: @author.id
+      visit author_path(@author)
       expect(found).to eq(@author)
     end
   end
@@ -29,7 +30,8 @@ RSpec.describe AuthorsController do
     end
     let(:bro_found) { Author.find_by(name: bro_attributes[:name]) }
 
-    before { post :create, bro_attributes }
+    before { visit authors(bro_attributes) }
+      # post :create, bro_attributes }
 
     it "creates successfully" do
       expect(bro_found).to be_a(Author)
